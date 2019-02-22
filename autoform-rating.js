@@ -1,11 +1,20 @@
 import {Template} from 'meteor/templating';
 
 Template.afRating.onRendered(function () {
-    Meteor.setTimeout(function () {
-        $('#rating').rating({
-            initialRating: 5,
-        });
-    }, 500);
+    const data = Template.currentData();
+        this.autorun(() => {
+        Meteor.setTimeout(function () {
+            if(data && data.value) {
+                $('#rating').rating({
+                    initialRating: data.value,
+                });
+            } else {
+                $('#rating').rating({
+                    initialRating: 5,
+                });
+            }
+        }, 500);
+    });
 });  
 
 Template.afRating.onCreated(function () {
