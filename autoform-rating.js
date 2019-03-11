@@ -1,19 +1,16 @@
 import {Template} from 'meteor/templating';
 
 Template.afRating.onRendered(function () {
-    const data = Template.currentData();
-        this.autorun(() => {
+    this.autorun(() => {
+        const data = Template.currentData();
+        const intial = data.value ? (data.value || data.atts.ratingOptions.initial) : data.atts.ratingOptions.initial; 
+        const max = data.atts.ratingOptions ? (data.atts.ratingOptions.max || 5) : 5; 
         Meteor.setTimeout(function () {
-            if(data && data.value) {
-                $('#rating').rating({
-                    initialRating: data.value,
-                });
-            } else {
-                $('#rating').rating({
-                    initialRating: 5,
-                });
-            }
-        }, 500);
+            $('#rating').rating({
+                initialRating: intial,
+                maxRating: max
+            });
+        }, 200);
     });
 });  
 
@@ -29,7 +26,7 @@ Template.afRating.helpers({
     },
     value() {
         return Template.instance().value.get();
-    },
+    }
 });
 
 Template.afRating.events({
