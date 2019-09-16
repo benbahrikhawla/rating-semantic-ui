@@ -3,7 +3,7 @@ import {Template} from 'meteor/templating';
 Template.afRating.onRendered(function () {
     this.autorun(() => {
         const data = Template.currentData();
-        const intial = data.value ? (data.value || data.atts.ratingOptions.initial) : data.atts.ratingOptions.initial; 
+        const intial = data.value ? data.value : (data.atts.ratingOptions ? (data.atts.ratingOptions.initial || 0) : 0); 
         const max = data.atts.ratingOptions ? (data.atts.ratingOptions.max || 5) : 5; 
         Meteor.setTimeout(function () {
             $('#rating').rating({
