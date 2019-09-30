@@ -1,9 +1,14 @@
 import {Template} from 'meteor/templating';
 
+Template.afRating.onCreated(function () {
+    this.value = new ReactiveVar(false);
+});
+
 Template.afRating.onRendered(function () {
     this.autorun(() => {
         const data = Template.currentData();
         const intial = data.value ? data.value : (data.atts.ratingOptions ? (data.atts.ratingOptions.initial || 0) : 0); 
+        this.value.set(intial);
         const max = data.atts.ratingOptions ? (data.atts.ratingOptions.max || 5) : 5; 
         Meteor.setTimeout(function () {
             $('#rating').rating({
@@ -14,9 +19,6 @@ Template.afRating.onRendered(function () {
     });
 });  
 
-Template.afRating.onCreated(function () {
-    this.value = new ReactiveVar(false);
-});
 
 Template.afRating.helpers({
     schemaKey() {
